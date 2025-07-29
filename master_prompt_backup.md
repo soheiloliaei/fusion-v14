@@ -1,13 +1,24 @@
 # Fusion v14 Master Prompt
 
 ## System Overview
-Fusion v14 is a programmable agent OS that orchestrates specialized agents and tools for comprehensive design analysis, evaluation, and recommendations.
+
+Fusion v14 is a programmable agent OS that orchestrates specialized agents and tools to provide comprehensive design analysis, evaluation, and recommendations. The system operates asynchronously with sophisticated memory management and pattern-based fallback mechanisms.
 
 ## Core Architecture
-- **VP Design Agent**: Design analysis, user-centered principles, accessibility
-- **Evaluator Agent**: Comprehensive evaluation with confidence scoring
-- **Tool Integration**: UX Audit and Trust Explainer tools
-- **Pattern Registry**: Intelligent pattern matching and fallback
+
+### Agent System
+- **VP Design Agent**: Specialized in design analysis, user-centered design principles, and accessibility compliance
+- **Evaluator Agent**: Comprehensive evaluation across multiple criteria with confidence scoring
+- **Tool Integration**: Modular tools (UX Audit, Trust Explainer) that enhance agent capabilities
+- **Pattern Registry**: Intelligent pattern matching and fallback for optimal performance
+
+### Execution Flow
+1. **Input Processing**: Analyze user input for intent and requirements
+2. **Agent Selection**: Choose appropriate agent(s) based on input type
+3. **Tool Coordination**: Apply relevant tools to enhance analysis
+4. **Pattern Application**: Use patterns for improved results when confidence is low
+5. **Output Generation**: Provide comprehensive, actionable recommendations
+6. **Memory Storage**: Store interaction for learning and context
 
 ## Agent Capabilities
 
@@ -31,6 +42,13 @@ Fusion v14 is a programmable agent OS that orchestrates specialized agents and t
 6. Performance optimization (when performance is a user need)
 7. Brand consistency (for brand design)
 
+**Output Structure**:
+- Enhanced output with design recommendations
+- Confidence scoring based on analysis quality
+- Tool usage tracking
+- Shared state updates
+- Execution time metrics
+
 ### Evaluator Agent
 **Purpose**: Comprehensive evaluation and scoring across multiple criteria
 
@@ -42,6 +60,13 @@ Fusion v14 is a programmable agent OS that orchestrates specialized agents and t
 5. **Relevance** (15% weight): How relevant is the output to the input?
 6. **Innovation** (10% weight): How innovative or creative is the approach?
 7. **Product Value** (10% weight): How much business/product value does it provide?
+
+**Evaluation Process**:
+- Context extraction from input
+- Multi-criteria evaluation with weighted scoring
+- Reasoning generation for each criterion
+- Overall confidence calculation
+- Detailed evaluation report generation
 
 **Quality Assessment**:
 - Excellent Quality (≥0.9): Ready for production use
@@ -72,6 +97,8 @@ Fusion v14 is a programmable agent OS that orchestrates specialized agents and t
 - **Performance**: load_time, response_time, smoothness
 - **Engagement**: user_retention, time_on_site, interaction_rate
 
+**Output**: Comprehensive UX audit report with specific recommendations
+
 ### Trust Explainer Tool
 **Purpose**: Trust-building analysis and enhancement recommendations
 
@@ -88,6 +115,8 @@ Fusion v14 is a programmable agent OS that orchestrates specialized agents and t
 - **Interaction**: responsive_feedback, error_handling, loading_states, progress_indicators
 - **Social**: user_reviews, social_media, community_features, expert_opinions
 
+**Output**: Trust enhancement plan with specific implementation strategies
+
 ## Pattern System
 
 ### Pattern Registry
@@ -99,6 +128,13 @@ Fusion v14 is a programmable agent OS that orchestrates specialized agents and t
 3. **trust_building**: Analyze and enhance trust elements
 4. **comprehensive_evaluation**: Full evaluation with detailed scoring
 5. **basic_evaluation**: Essential evaluation criteria
+
+**Pattern Features**:
+- Smart pattern matching based on input keywords
+- Confidence-based pattern application
+- Fallback system for low-confidence results
+- Performance tracking and statistics
+- Custom pattern creation capabilities
 
 **Pattern Selection Logic**:
 - Design-related inputs → design_enhancement, ux_audit, or trust_building
@@ -121,6 +157,30 @@ Fusion v14 is a programmable agent OS that orchestrates specialized agents and t
 - Relevant memory retrieval based on query similarity
 - Pattern usage statistics and success rates
 - Context summary generation
+
+**Context Summary Includes**:
+- Session ID and timestamp
+- Total interactions and average confidence
+- Memory size and shared state keys
+- Recent interaction history
+- Pattern memory statistics
+
+## Configuration System
+
+### .fusion.json Configuration
+**Purpose**: Centralized configuration for all system components
+
+**Key Settings**:
+- **version**: System version (v14.0)
+- **max_prompt_tokens**: Token limit for prompts (8000)
+- **enabled_agents**: List of active agents
+- **tools_enabled**: Enable/disable tool system
+- **pattern_fallback**: Enable pattern fallback system
+- **memory_enabled**: Enable memory management
+- **async_mode**: Enable async execution
+- **auto_commit**: Enable automatic commits
+- **debug_mode**: Enable debug logging
+- **log_level**: Logging level (INFO)
 
 ## CLI Interface
 
@@ -147,6 +207,13 @@ python fusion.py pattern "Evaluate this design proposal"
 python fusion.py status
 ```
 
+**Output Format**:
+- Structured results with confidence scores
+- Execution time metrics
+- Tool usage tracking
+- Error handling with clear messages
+- Colored output for better readability
+
 ## Error Handling and Fallback
 
 ### Error Recovery
@@ -159,6 +226,38 @@ python fusion.py status
 - **High Confidence** (≥0.8): Use results directly
 - **Medium Confidence** (0.6-0.8): Apply enhancement patterns
 - **Low Confidence** (<0.6): Apply comprehensive fallback patterns
+
+### Logging and Debugging
+- **Structured Logging**: All operations logged with timestamps
+- **Error Tracking**: Detailed error information for debugging
+- **Performance Monitoring**: Execution time and resource usage
+- **Debug Mode**: Enhanced logging for development
+
+## Integration and Extensibility
+
+### Adding New Agents
+1. Create agent class with async `run()` method
+2. Implement required interface methods
+3. Register with orchestrator
+4. Update configuration
+
+### Adding New Tools
+1. Create tool class with async `run()` method
+2. Implement tool-specific analysis logic
+3. Register with orchestrator
+4. Update agent tool usage
+
+### Adding New Patterns
+1. Define pattern metadata and enhancement logic
+2. Register with pattern registry
+3. Define fallback relationships
+4. Test pattern performance
+
+### Custom Configuration
+- Modify `.fusion.json` for system settings
+- Add custom agents to enabled_agents list
+- Configure tool-specific settings
+- Set pattern fallback preferences
 
 ## Best Practices
 
@@ -174,4 +273,25 @@ python fusion.py status
 - **Pattern Application**: Note which patterns were used for enhancement
 - **Recommendations**: Prioritize high-confidence recommendations
 
-This master prompt provides comprehensive guidance for understanding and using Fusion v14, ensuring consistent behavior across all system components.
+### System Optimization
+- **Memory Management**: Export memory periodically for persistence
+- **Pattern Performance**: Monitor pattern success rates and adjust thresholds
+- **Tool Selection**: Use appropriate tools based on input type
+- **Error Monitoring**: Check logs for recurring issues
+
+## Future Enhancements
+
+### Planned Features
+- **MCP Integration**: Connect to external services (GitHub, Figma, etc.)
+- **Multi-modal Support**: Handle images, documents, and voice input
+- **Advanced Learning**: Pattern performance-based learning
+- **External APIs**: Integration with design and development tools
+- **Professional UI**: Web-based interface for non-technical users
+
+### Architecture Evolution
+- **Microservices**: Decompose into independent services
+- **Plugin System**: Dynamic loading of agents and tools
+- **Distributed Execution**: Multi-node agent orchestration
+- **Real-time Collaboration**: Multi-user simultaneous usage
+
+This master prompt provides comprehensive guidance for understanding and using Fusion v14, ensuring consistent behavior across all system components while maintaining flexibility for future enhancements.
