@@ -11,6 +11,7 @@ import sys
 from agents.vp_design_agent import VPDesignAgent
 from agents.evaluator_agent import EvaluatorAgent
 from agents.creative_director_agent import CreativeDirectorAgent
+from agents.prompt_master_agent import PromptMasterAgent
 from core.execution_orchestrator_v14 import ExecutionOrchestrator
 
 print("🧠 DEBUG: fusion.py top-level code executed")
@@ -45,7 +46,7 @@ def main():
             "vp_design": VPDesignAgent,
             "evaluator": EvaluatorAgent,
             "creative_director": CreativeDirectorAgent,
-            "prompt_master": "PromptMasterAgent",  # Placeholder
+            "prompt_master": PromptMasterAgent,
             "design_technologist": "DesignTechnologistAgent",  # Placeholder
             "product_navigator": "ProductNavigatorAgent",  # Placeholder
             "strategy_pilot": "StrategyPilotAgent",  # Placeholder
@@ -54,7 +55,7 @@ def main():
         }
         
         if args.agent in agent_map:
-            if args.agent in ["vp_design", "evaluator", "creative_director"]:
+            if args.agent in ["vp_design", "evaluator", "creative_director", "prompt_master"]:
                 # Working agents
                 agent_class = agent_map[args.agent]
                 agent = agent_class()
@@ -63,7 +64,7 @@ def main():
             else:
                 # Placeholder agents (need implementation)
                 print(f"⚠️ Agent '{args.agent}' is available but not yet implemented")
-                print(f"Available working agents: vp_design, evaluator, creative_director")
+                print(f"Available working agents: vp_design, evaluator, creative_director, prompt_master")
                 print(f"Available placeholder agents: {', '.join([k for k in agent_map.keys() if k not in ['vp_design', 'evaluator']])}")
                 sys.exit(1)
         else:
