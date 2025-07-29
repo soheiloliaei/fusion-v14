@@ -1,0 +1,1 @@
+✅ Fusion v14 is fully operational. All placeholder agents now require real logic implementations. Starting with creative_director_agent.py.

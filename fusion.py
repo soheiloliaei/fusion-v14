@@ -10,6 +10,7 @@ import sys
 
 from agents.vp_design_agent import VPDesignAgent
 from agents.evaluator_agent import EvaluatorAgent
+from agents.creative_director_agent import CreativeDirectorAgent
 from core.execution_orchestrator_v14 import ExecutionOrchestrator
 
 print("🧠 DEBUG: fusion.py top-level code executed")
@@ -37,20 +38,37 @@ def main():
             sys.exit(1)
 
         input_text = " ".join(args.input)
-        print(f"🚀 Running agent '{args.agent}' on input: {input_text}")
+        print(f"�� Running agent '{args.agent}' on input: {input_text}")
 
-        if args.agent == "vp_design":
-            agent = VPDesignAgent()
-            output = asyncio.run(agent.run_async(input_text, {}))
-            print(f"🎨 Output from VPDesignAgent:\n{output}")
-
-        elif args.agent == "evaluator":
-            agent = EvaluatorAgent()
-            output = asyncio.run(agent.run_async(input_text, {}))
-            print(f"📊 Output from EvaluatorAgent:\n{output}")
-
+        # Dynamic agent loading
+        agent_map = {
+            "vp_design": VPDesignAgent,
+            "evaluator": EvaluatorAgent,
+            "creative_director": CreativeDirectorAgent,
+            "prompt_master": "PromptMasterAgent",  # Placeholder
+            "design_technologist": "DesignTechnologistAgent",  # Placeholder
+            "product_navigator": "ProductNavigatorAgent",  # Placeholder
+            "strategy_pilot": "StrategyPilotAgent",  # Placeholder
+            "vp_of_design": "VPOfDesignAgent",  # Placeholder
+            "vp_of_product": "VPOfProductAgent"  # Placeholder
+        }
+        
+        if args.agent in agent_map:
+            if args.agent in ["vp_design", "evaluator", "creative_director"]:
+                # Working agents
+                agent_class = agent_map[args.agent]
+                agent = agent_class()
+                output = asyncio.run(agent.run_async(input_text, {}))
+                print(f"🎨 Output from {args.agent}:\n{output}")
+            else:
+                # Placeholder agents (need implementation)
+                print(f"⚠️ Agent '{args.agent}' is available but not yet implemented")
+                print(f"Available working agents: vp_design, evaluator, creative_director")
+                print(f"Available placeholder agents: {', '.join([k for k in agent_map.keys() if k not in ['vp_design', 'evaluator']])}")
+                sys.exit(1)
         else:
             print(f"❌ Error: Unknown agent '{args.agent}'")
+            print(f"Available agents: {', '.join(agent_map.keys())}")
             sys.exit(1)
 
     elif args.command == "pipeline":
@@ -66,14 +84,20 @@ def main():
         orchestrator = ExecutionOrchestrator(context)
         
         # Register agents and tools
-        from agents.evaluator_agent import EvaluatorAgent
         from tools.ux_audit_tool import UXAuditTool
         from tools.trust_explainer_tool import TrustExplainerTool
         
+        # Register working agents
         orchestrator.register_agent("vp_design", VPDesignAgent())
         orchestrator.register_agent("evaluator", EvaluatorAgent())
+        
+        # Register tools
         orchestrator.register_tool("ux_audit", UXAuditTool())
         orchestrator.register_tool("trust_explainer", TrustExplainerTool())
+        
+        print(f"✅ Registered agents: vp_design, evaluator")
+        print(f"✅ Registered tools: ux_audit, trust_explainer")
+        print(f"📋 Available agents (not yet implemented): creative_director, prompt_master, design_technologist, product_navigator, strategy_pilot, vp_of_design, vp_of_product")
         
         output = asyncio.run(orchestrator.execute_pipeline(input_text))
         print(f"🧩 Pipeline Output:\n{output}")
